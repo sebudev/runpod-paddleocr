@@ -1,0 +1,124 @@
+{
+  "title": "PaddleOCR-VL-1.6 Serverless",
+  "description": "Document parsing OCR serverless worker powered by PaddleOCR-VL-1.6 (0.9B). Supports OCR, table, formula, chart, text spotting, and seal recognition. Outputs JSON or Markdown from images/PDF.",
+  "type": "serverless",
+  "category": "image",
+  "iconUrl": "https://huggingface.co/front/assets/huggingface_logo-noborder.svg",
+
+  "config": {
+    "runsOn": "GPU",
+    "endpointType": "QUEUE",
+    "containerDiskInGb": 20,
+
+    "gpuCount": 1,
+    "gpuIds": "ADA_24,ADA_48,AMPERE_48,AMPERE_80",
+    "allowedCudaVersions": [
+      "12.6", "12.5", "12.4",
+      "12.3", "12.2", "12.1", "12.0"
+    ],
+
+    "presets": [
+      {
+        "name": "Document Parsing (Markdown)",
+        "defaults": {
+          "PIPELINE_VERSION": "v1.6",
+          "DEFAULT_TASKS": "auto",
+          "OUTPUT_FORMAT": "markdown",
+          "MAX_NEW_TOKENS": 1024,
+          "CONCURRENT_WORKERS": 1
+        }
+      },
+      {
+        "name": "Scene OCR (JSON)",
+        "defaults": {
+          "PIPELINE_VERSION": "v1.6",
+          "DEFAULT_TASKS": "ocr",
+          "OUTPUT_FORMAT": "json",
+          "MAX_NEW_TOKENS": 512,
+          "CONCURRENT_WORKERS": 2
+        }
+      },
+      {
+        "name": "Table & Formula Extraction",
+        "defaults": {
+          "PIPELINE_VERSION": "v1.6",
+          "DEFAULT_TASKS": "table,formula",
+          "OUTPUT_FORMAT": "markdown",
+          "MAX_NEW_TOKENS": 1024,
+          "CONCURRENT_WORKERS": 1
+        }
+      }
+    ],
+
+    "env": [
+      {
+        "key": "PIPELINE_VERSION",
+        "input": {
+          "name": "PaddleOCR-VL Pipeline Version",
+          "type": "string",
+          "description": "Model pipeline version to use",
+          "options": [
+            {"label": "v1.6 (latest, recommended)", "value": "v1.6"},
+            {"label": "v1.5", "value": "v1.5"}
+          ],
+          "default": "v1.6"
+        }
+      },
+      {
+        "key": "DEFAULT_TASKS",
+        "input": {
+          "name": "Default Tasks",
+          "type": "string",
+          "description": "Comma-separated list of tasks. Options: auto, ocr, table, formula, chart, spotting, seal",
+          "default": "auto"
+        }
+      },
+      {
+        "key": "OUTPUT_FORMAT",
+        "input": {
+          "name": "Output Format",
+          "type": "string",
+          "description": "Default output format for parsed results",
+          "options": [
+            {"label": "JSON (structured data)", "value": "json"},
+            {"label": "Markdown (readable)", "value": "markdown"},
+            {"label": "Both JSON + Markdown", "value": "both"}
+          ],
+          "default": "json"
+        }
+      },
+      {
+        "key": "MAX_NEW_TOKENS",
+        "input": {
+          "name": "Max Generation Tokens",
+          "type": "number",
+          "description": "Maximum number of tokens to generate per page",
+          "min": 128,
+          "max": 4096,
+          "default": 512
+        }
+      },
+      {
+        "key": "CONCURRENT_WORKERS",
+        "input": {
+          "name": "Concurrent Workers per GPU",
+          "type": "number",
+          "description": "Number of concurrent requests per worker. Increase for small OCR jobs. Monitor GPU memory.",
+          "min": 1,
+          "max": 8,
+          "default": 1
+        }
+      },
+      {
+        "key": "HF_TOKEN",
+        "input": {
+          "name": "HuggingFace Token",
+          "type": "string",
+          "description": "HuggingFace access token for gated/private models (optional)",
+          "default": "",
+          "advanced": true
+        }
+      }
+    ]
+  }
+}

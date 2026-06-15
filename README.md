@@ -1,4 +1,14 @@
+<div align="center">
+  <a href="https://runpod.io?ref=2xxyx4vv&utm_source=github&utm_medium=github&utm_campaign=runpod-paddleocr">
+    <img src="https://img.shields.io/badge/RunPod-Hub-9289FE?style=for-the-badge&logo=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAIwSURBVHgB7ZbtUcMwDIXfpAuwATCBTMAmsAlhApgAJoAJYALYBCaACWADmMDfB0+WKllO7Di0d+UfnU6WZOlJslME/5pQq9VqERHB6XRqOI7j0lim6bLf71v7/f4cBA5DKeWGIYiCILiOvu87xtgNc2AulUq1HMe5Y4xtrLXkcrlsMQe2LD8iF8wdYwxiAmazGYPZbDbN+Xx+Z4zdG2vn8/mNBw5Bq9VqOOvMOJ1Om91uN4PErVbrlnq9XkcpldOMMc5ms5lhjDWbzXoY6/V6QYxwPB4L2+AFw3EcxhgzTdMMguBOCOGXUqoQQpRSSpeq1Wr13W73sNlsPjLGJq7rNvt6vSZCiIQQQkr5gtBarZYYDodXkiRJjTGktJYkSUie50QIQYIgIMYYx/O8OY7jI5ckQggxxhhijGEYhqPJZNIkSRLGGJvP51dSSkWSJCGEkFKSSpLESZKktVqN9nq9OymlJkmSKKVIIUkipZRSr9stFotbrVarSimKokgkSQ+ovV6vV6/X+0VRHCilb8YYQpIkSimSlJKyLElZlqTf7xNjDEmSdK2UInmeE2MMSSlln0opIoTMGGPEGENEKTWXJIlardYbKaX5fD4bY4gx9gN4Pp9fJ5NJe5f+EEKq0+n8qNvt7qSUZq1WI0mSkKqqSlEUX4uiYFJKSimnrVarjWbbttnr9X6llLqHKqrVqgghCKUUCSF0s9lccRyHFkVBn+u/9Jc4nU5r+B0LIS4YY0oIEf4CR1EUwV9BSSn9A6X/F0n+j8APNUR25mfXGqcAAAAASUVORK5CYII=" alt="RunPod Hub">
+  </a>
+</div>
+
 # RunPod PaddleOCR-VL Serverless Worker
+
+[![Deploy on RunPod](https://img.shields.io/badge/RunPod-Deploy%20on%20Hub-9289FE?style=flat-square)](https://runpod.io?ref=2xxyx4vv&utm_source=github&utm_medium=github&utm_campaign=runpod-paddleocr)
+[![PaddleOCR](https://img.shields.io/badge/PaddleOCR-3.7.0-blue)](https://github.com/PaddlePaddle/PaddleOCR)
+[![License](https://img.shields.io/badge/License-Apache%202.0-green)](LICENSE)
 
 PaddleOCR-VL-1.6 (0.9B) serverless worker for RunPod. Supports document parsing: OCR, table recognition, formula recognition, chart recognition, text spotting, and seal recognition.
 
@@ -6,11 +16,15 @@ PaddleOCR-VL-1.6 (0.9B) serverless worker for RunPod. Supports document parsing:
 
 ```
 runpod-paddleocr/
-├── Dockerfile              # Docker build instructions
+├── .runpod/
+│   ├── hub.json            # RunPod Hub metadata & config
+│   └── tests.json          # Hub test cases
+├── Dockerfile              # Docker build instructions (CUDA 12.6)
 ├── requirements.txt        # Python dependencies
 ├── builder/
 │   └── requirements.txt    # (legacy) Python dependencies
 ├── .dockerignore           # Build exclusions
+├── handler.py              # Hub entry point
 ├── src/
 │   └── handler.py          # RunPod serverless handler
 ├── test_input.json         # Local testing fixture
@@ -29,6 +43,25 @@ runpod-paddleocr/
 - NVIDIA GPU (16GB+ VRAM recommended, 24GB+ for large documents)
 
 ### Build & Deploy
+
+```bash
+# Build image
+docker build --platform linux/amd64 -t yourdockerhub/runpod-paddleocr:v1 .
+
+# Push to registry
+docker push yourdockerhub/runpod-paddleocr:v1
+```
+
+### Deploy from RunPod Hub (Recommended)
+
+[![Deploy on RunPod](https://img.shields.io/badge/RunPod-Deploy%20on%20Hub-9289FE?style=flat-square)](https://runpod.io?ref=2xxyx4vv&utm_source=github&utm_medium=github&utm_campaign=runpod-paddleocr)
+
+1. Go to the **[RunPod Hub](https://runpod.io?ref=2xxyx4vv)** and search for **PaddleOCR-VL-1.6**
+2. Click **Deploy** and configure your endpoint settings
+3. Choose a preset or customize environment variables
+4. Click **Deploy Endpoint** — RunPod handles the build and deployment automatically
+
+### Manual Deploy from Docker Registry
 
 ```bash
 # Build image
