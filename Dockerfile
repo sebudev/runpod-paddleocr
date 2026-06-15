@@ -17,8 +17,7 @@ RUN pip install --no-cache-dir --upgrade pip setuptools wheel \
     && pip install --no-cache-dir -r requirements.txt \
     && rm -rf /root/.cache/pip
 
-COPY src/handler.py .
-
+COPY handler.py .
 ENV PIPELINE_VERSION=v1.6
 ENV DEFAULT_TASKS=auto
 ENV OUTPUT_FORMAT=json

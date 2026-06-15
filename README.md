@@ -21,12 +21,8 @@ runpod-paddleocr/
 │   └── tests.json          # Hub test cases
 ├── Dockerfile              # Docker build instructions (CUDA 12.6)
 ├── requirements.txt        # Python dependencies
-├── builder/
-│   └── requirements.txt    # (legacy) Python dependencies
 ├── .dockerignore           # Build exclusions
-├── handler.py              # Hub entry point
-├── src/
-│   └── handler.py          # RunPod serverless handler
+├── handler.py              # RunPod serverless handler
 ├── test_input.json         # Local testing fixture
 ├── README.md               # This file
 └── docs/
@@ -158,10 +154,10 @@ All configuration is done via environment variables. Set them in the RunPod cons
 
 ```bash
 # Test with test_input.json
-python src/handler.py
+python handler.py
 
 # Test with custom input
-python src/handler.py --test_input '{"input": {"image": "https://example.com/doc.png"}}'
+python handler.py --test_input '{"input": {"image": "https://example.com/doc.png"}}'
 ```
 
 ## Example Client (Python)
