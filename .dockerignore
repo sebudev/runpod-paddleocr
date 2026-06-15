@@ -1,0 +1,10 @@
+.git
+.gitignore
+README.md
+docs/
+test_input.json
+__pycache__/
+*.pyc
+.venv/
+venv/
+.env
