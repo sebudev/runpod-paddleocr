@@ -22,7 +22,7 @@ CONCURRENT_WORKERS = int(os.environ.get("CONCURRENT_WORKERS", "1"))
 
 pipeline = None
 
-_REMOTE_URL_HEADERS = {"User-Agent": "RunPod-PaddleOCR/1.0"}
+_REMOTE_URL_HEADERS = {}
 if HF_TOKEN:
     _REMOTE_URL_HEADERS["Authorization"] = f"Bearer {HF_TOKEN}"
 
