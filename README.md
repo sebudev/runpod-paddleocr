@@ -6,7 +6,7 @@
 
 # RunPod PaddleOCR-VL Serverless Worker
 
-[![Deploy on RunPod](https://img.shields.io/badge/RunPod-Deploy%20on%20Hub-9289FE?style=flat-square)](https://runpod.io?ref=2xxyx4vv&utm_source=github&utm_medium=github&utm_campaign=runpod-paddleocr)
+[![Runpod](https://api.runpod.io/badge/sebudev/runpod-paddleocr)](https://console.runpod.io/hub/sebudev/runpod-paddleocr)
 [![PaddleOCR](https://img.shields.io/badge/PaddleOCR-3.7.0-blue)](https://github.com/PaddlePaddle/PaddleOCR)
 [![License](https://img.shields.io/badge/License-Apache%202.0-green)](LICENSE)
 
