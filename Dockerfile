@@ -1,7 +1,7 @@
 FROM nvidia/cuda:12.6.3-runtime-ubuntu22.04
 
 RUN apt-get update -y \
-    && apt-get install -y python3-pip python3-dev wget curl \
+    && apt-get install -y python3-pip python3-dev wget curl libgl1-mesa-glx libglib2.0-0 \
     && rm -rf /var/lib/apt/lists/*
 
 RUN ldconfig /usr/local/cuda-12.6/compat/ 2>/dev/null || true
