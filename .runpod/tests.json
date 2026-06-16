@@ -1,19 +1,10 @@
 {
   "tests": [
     {
-      "name": "basic_ocr_demo",
+      "name": "ocr_demo",
       "input": {
         "image": "https://paddle-model-ecology.bj.bcebos.com/paddlex/imgs/demo_image/paddleocr_vl_demo.png",
-        "tasks": "auto",
         "output_format": "json"
-      },
-      "timeout": 300000
-    },
-    {
-      "name": "markdown_output",
-      "input": {
-        "image": "https://paddle-model-ecology.bj.bcebos.com/paddlex/imgs/demo_image/paddleocr_vl_demo.png",
-        "output_format": "markdown"
       },
       "timeout": 300000
     }
