@@ -194,6 +194,6 @@ if __name__ == "__main__":
     runpod.serverless.start(
         {
             "handler": handler,
-            "concurrency_modifier": lambda: CONCURRENT_WORKERS,
+            "concurrency_modifier": lambda x: CONCURRENT_WORKERS,
         }
     )
