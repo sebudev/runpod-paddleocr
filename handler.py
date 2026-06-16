@@ -104,6 +104,25 @@ def initialize_pipeline():
         logger.info("Initializing PaddleOCRVL (version=%s, cache_dir=%s)",
                      PIPELINE_VERSION, MODEL_CACHE_DIR or "default")
         pipeline = PaddleOCRVL(**kwargs)
+
+        import tempfile
+        warmup_path = os.path.join(tempfile.gettempdir(), "_warmup.png")
+        if not os.path.exists(warmup_path):
+            try:
+                from PIL import Image
+                img = Image.new("RGB", (64, 64), color="white")
+                img.save(warmup_path)
+            except Exception:
+                warmup_path = None
+
+        if warmup_path and os.path.exists(warmup_path):
+            try:
+                logger.info("Running warmup inference...")
+                pipeline.predict(warmup_path)
+                logger.info("Warmup inference completed")
+            except Exception:
+                logger.info("Warmup skipped (expected on first run)")
+
         logger.info("Pipeline initialized successfully")
     except Exception as e:
         logger.error("Failed to initialize pipeline: %s", e)
