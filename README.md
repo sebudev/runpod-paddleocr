@@ -94,6 +94,29 @@ Then in the **RunPod Console**:
 }
 ```
 
+### Full Scan (Extract All Text)
+
+By default, image blocks (photos, embedded images) are skipped and referenced as image placeholders. To extract every text including content inside images:
+
+```json
+{
+  "input": {
+    "pdf": "https://example.com/document.pdf",
+    "tasks": "auto",
+    "output_format": "markdown",
+    "use_ocr_for_image_block": true,
+    "format_block_content": true
+  }
+}
+```
+
+Add `"use_seal_recognition": true` if the document contains stamps or seals.
+
+Alternatively, set these as environment variables on your endpoint for permanent defaults:
+- `USE_OCR_FOR_IMAGE_BLOCK=true`
+- `FORMAT_BLOCK_CONTENT=true`
+- `USE_SEAL_RECOGNITION=true`
+
 ### Parameters
 
 | Parameter | Type | Default | Description |
