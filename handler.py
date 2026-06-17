@@ -36,6 +36,9 @@ def _safe_int(val, default):
 
 MAX_NEW_TOKENS = _safe_int(os.environ.get("MAX_NEW_TOKENS"), 512)
 CONCURRENT_WORKERS = _safe_int(os.environ.get("CONCURRENT_WORKERS"), 1)
+USE_OCR_FOR_IMAGE_BLOCK = os.environ.get("USE_OCR_FOR_IMAGE_BLOCK", "false").lower() == "true"
+FORMAT_BLOCK_CONTENT = os.environ.get("FORMAT_BLOCK_CONTENT", "true").lower() == "true"
+USE_SEAL_RECOGNITION = os.environ.get("USE_SEAL_RECOGNITION", "false").lower() == "true"
 
 
 def download_file(url, dest_path=None):
@@ -133,23 +136,29 @@ def prepare_file(source_type, source_value):
 
 def parse_tasks(tasks_str):
     if not tasks_str or tasks_str.strip().lower() == "auto":
-        return {}
+        return {
+            "use_chart_recognition": True,
+            "use_seal_recognition": USE_SEAL_RECOGNITION,
+        }
 
     task_list = [t.strip().lower() for t in tasks_str.split(",")]
     kwargs = {}
 
-    has_chart = "chart" in task_list
-    has_seal = "seal" in task_list
+    kwargs["use_chart_recognition"] = "chart" in task_list
+    kwargs["use_seal_recognition"] = "seal" in task_list or USE_SEAL_RECOGNITION
+
     has_ocr = "ocr" in task_list
     has_table = "table" in task_list
     has_formula = "formula" in task_list
+    has_chart = "chart" in task_list
+    has_seal = "seal" in task_list
     has_spotting = "spotting" in task_list
-
-    kwargs["use_chart_recognition"] = has_chart
-    kwargs["use_seal_recognition"] = has_seal
 
     if has_ocr and not has_table and not has_formula and not has_chart and not has_seal and not has_spotting:
         kwargs["use_layout_detection"] = False
+
+    if has_spotting:
+        kwargs["use_layout_detection"] = True
 
     return kwargs
 
@@ -195,7 +204,17 @@ def handler(job):
     tasks_str = job_input.get("tasks") or DEFAULT_TASKS
     max_new_tokens = _safe_int(job_input.get("max_new_tokens"), MAX_NEW_TOKENS)
 
+    use_ocr_for_image_block = job_input.get("use_ocr_for_image_block", USE_OCR_FOR_IMAGE_BLOCK)
+    if isinstance(use_ocr_for_image_block, str):
+        use_ocr_for_image_block = use_ocr_for_image_block.lower() == "true"
+
+    format_block_content = job_input.get("format_block_content", FORMAT_BLOCK_CONTENT)
+    if isinstance(format_block_content, str):
+        format_block_content = format_block_content.lower() == "true"
+
     task_kwargs = parse_tasks(tasks_str)
+    task_kwargs["use_ocr_for_image_block"] = use_ocr_for_image_block
+    task_kwargs["format_block_content"] = format_block_content
 
     runpod.serverless.progress_update(job, "Resolving input sources")
     sources = resolve_input_source(job_input)
