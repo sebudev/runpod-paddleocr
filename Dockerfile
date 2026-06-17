@@ -11,10 +11,10 @@ WORKDIR /app
 
 COPY requirements.txt .
 RUN pip install --no-cache-dir --upgrade pip setuptools wheel \
+    && pip install --no-cache-dir -r requirements.txt \
     && pip install --no-cache-dir \
         --extra-index-url https://www.paddlepaddle.org.cn/packages/stable/cu126 \
         paddlepaddle-gpu==3.3.1 \
-    && pip install --no-cache-dir -r requirements.txt \
     && rm -rf /root/.cache/pip
 
 COPY handler.py .

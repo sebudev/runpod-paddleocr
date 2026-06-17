@@ -15,10 +15,8 @@ logger = logging.getLogger("paddleocr-handler")
 PIPELINE_VERSION = os.environ.get("PIPELINE_VERSION", "v1.6")
 DEFAULT_TASKS = os.environ.get("DEFAULT_TASKS", "auto")
 OUTPUT_FORMAT = os.environ.get("OUTPUT_FORMAT", "json")
-MAX_NEW_TOKENS = int(os.environ.get("MAX_NEW_TOKENS", "512"))
 HF_TOKEN = os.environ.get("HF_TOKEN", None)
 MODEL_CACHE_DIR = os.environ.get("MODEL_CACHE_DIR", None)
-CONCURRENT_WORKERS = int(os.environ.get("CONCURRENT_WORKERS", "1"))
 
 pipeline = None
 
