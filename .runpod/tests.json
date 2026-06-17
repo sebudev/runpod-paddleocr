@@ -3,14 +3,14 @@
     {
       "name": "ocr_demo",
       "input": {
-        "image": "https://paddle-model-ecology.bj.bcebos.com/paddlex/imgs/demo_image/paddleocr_vl_demo.png",
+        "image": "https://raw.githubusercontent.com/PaddlePaddle/PaddleOCR/release/2.7/doc/imgs/11.jpg",
         "output_format": "json"
       },
       "timeout": 300000
     }
   ],
   "config": {
-    "gpuTypeId": "NVIDIA L4",
+    "gpuTypeId": "NVIDIA RTX A5000",
     "gpuCount": 1,
     "env": [
       {
@@ -19,7 +19,7 @@
       },
       {
         "key": "DEFAULT_TASKS",
-        "value": "auto"
+        "value": "ocr"
       },
       {
         "key": "OUTPUT_FORMAT",
@@ -27,7 +27,7 @@
       },
       {
         "key": "MAX_NEW_TOKENS",
-        "value": "512"
+        "value": "128"
       }
     ],
     "allowedCudaVersions": [
