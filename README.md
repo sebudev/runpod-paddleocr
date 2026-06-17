@@ -104,6 +104,9 @@ Then in the **RunPod Console**:
 | `tasks` | string | `auto` | Comma-separated tasks: `ocr`, `table`, `formula`, `chart`, `spotting`, `seal`, or `auto` |
 | `output_format` | string | `json` | Output format: `json`, `markdown`, or `both` |
 | `max_new_tokens` | int | `512` | Maximum generation tokens |
+| `use_ocr_for_image_block` | bool | `false` | Extract text from image blocks instead of skipping them |
+| `format_block_content` | bool | `true` | Format block content as Markdown (vs raw output) |
+| `use_seal_recognition` | bool | `false` | Enable seal/stamp text recognition |
 
 ### Response Format
 
@@ -143,6 +146,9 @@ All configuration is done via environment variables. Set them in the RunPod cons
 | `MAX_NEW_TOKENS` | `512` | Maximum tokens for text generation |
 | `HF_TOKEN` | - | HuggingFace token for gated/private models |
 | `MODEL_CACHE_DIR` | - | Custom model cache path (e.g., `/runpod-volume/huggingface-cache`) |
+| `USE_OCR_FOR_IMAGE_BLOCK` | `false` | Extract text from image blocks (overridable per-job) |
+| `FORMAT_BLOCK_CONTENT` | `true` | Format block content as Markdown (overridable per-job) |
+| `USE_SEAL_RECOGNITION` | `false` | Enable seal/stamp recognition (overridable per-job or via `seal` task) |
 
 ### Performance
 

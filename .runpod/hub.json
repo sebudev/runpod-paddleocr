@@ -118,6 +118,28 @@
           "default": "",
           "advanced": true
         }
+      },
+      {
+        "key": "USE_OCR_FOR_IMAGE_BLOCK",
+        "input": {
+          "type": "boolean",
+          "name": "OCR Image Blocks",
+          "description": "Extract text from image blocks instead of skipping them",
+          "default": false,
+          "trueValue": "true",
+          "falseValue": "false"
+        }
+      },
+      {
+        "key": "FORMAT_BLOCK_CONTENT",
+        "input": {
+          "type": "boolean",
+          "name": "Format Block Content",
+          "description": "Format block content as Markdown (vs raw output)",
+          "default": true,
+          "trueValue": "true",
+          "falseValue": "false"
+        }
       }
     ]
   }
